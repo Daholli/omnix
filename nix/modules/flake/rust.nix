@@ -58,6 +58,8 @@
       rec {
         default = omnix-cli;
         omnix-cli = crates."omnix-cli".crane.outputs.drv.crate.overrideAttrs (oa: {
+          version = (lib.importTOML "${config.rust-project.src}/crates/omnix-cli/Cargo.toml").package.version;
+          __intentionallyOverridingVersion = true;
           nativeBuildInputs = (oa.nativeBuildInputs or [ ]) ++ [ pkgs.installShellFiles ];
           postInstall = ''
             installShellCompletion --cmd om \
